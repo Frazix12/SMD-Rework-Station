@@ -1,170 +1,150 @@
-# SMD Rework Station
+<div align="center">
 
-## Finished Project Image
-<p align="center"><em>Add the final assembled project photo here.</em></p>
-<p align="center"><br><br><br><br></p>
+# 🔧 SMD Rework Station
 
-## Overview
-This repository contains the firmware for an Arduino-based SMD hot air rework
-station. The main sketch, `SMD.ino`, handles heater control, fan control,
-thermocouple feedback, LCD output, button input, buzzer feedback, sleep mode,
-EEPROM persistence, and the serial connection used by the desktop companion
-app.
+**Arduino-powered hot air rework station with PID control, desktop app & web UI**
 
-Use `SMD.ino` for the current full-featured build. The
-`SMD_basic/SMD_basic.ino` sketch is a simpler fallback version.
+[![Firmware](https://img.shields.io/badge/Firmware-v3-blueviolet?style=for-the-badge&logo=arduino)](SMD.ino)
+[![Protocol](https://img.shields.io/badge/Serial%20Protocol-v2%20%40%20115200-blue?style=for-the-badge)](SMD.ino)
+[![Platform](https://img.shields.io/badge/Platform-Arduino%20Nano%20%2F%20Uno-00979D?style=for-the-badge&logo=arduino&logoColor=white)](https://arduino.cc)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-## Desktop App Screenshots
-<table>
-  <tr>
-    <td align="center"><strong>Main Control View</strong><br><br><br><br></td>
-    <td align="center"><strong>Live Telemetry / Tuning</strong><br><br><br><br></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>Calibration Screen</strong><br><br><br><br></td>
-    <td align="center"><strong>Extra App Screenshot</strong><br><br><br><br></td>
-  </tr>
-</table>
+[![App](https://img.shields.io/badge/Desktop%20App-Download-orange?style=for-the-badge&logo=github)](https://github.com/Frazix12/SMD-Rework-Station/releases)
+[![WebApp](https://img.shields.io/badge/Web%20App-Live-success?style=for-the-badge&logo=vercel)](https://smd-station.vercel.app/)
 
-## Current Features
-- PID-based heater control through an SSR output.
-- PWM fan control with separate display percentage and calibrated actual
-  minimum airflow.
-- MAX6675 thermocouple input with raw, sensor, corrected, and display
-  temperature handling.
-- 16x2 I2C LCD output with large temperature digits for runtime display.
-- Three-button interface for temperature, airflow, and calibration control.
-- Sleep input that shuts down heating and keeps the fan running until cooldown
-  completes.
-- Buzzer feedback for button presses, sleep transitions, and target reached.
-- EEPROM storage for setpoint, fan level, sensor offset, and fan minimum.
-- Serial protocol v2 at `115200` baud for desktop app control and telemetry.
-- Built-in airflow calibration table plus serial commands for live tuning.
+</div>
 
-## Default Runtime Limits
-| Setting | Value |
-| --- | --- |
-| Firmware version | `3` |
-| Serial protocol | `2` |
-| Temperature setpoint range | `100 C` to `500 C` |
-| Fan command range | `10%` to `100%` |
-| Default actual fan minimum | `30%` |
-| State telemetry rate | `4 Hz` |
+---
 
-## Hardware Pin Map
+## ✨ Features
+
+| | Feature |
+|---|---|
+| 🌡️ | PID heater control via SSR output |
+| 💨 | PWM fan control with calibrated airflow table |
+| 🔌 | MAX6675 thermocouple input |
+| 📟 | 16×2 I2C LCD with big temperature digits |
+| 🔘 | 3-button interface — temp, airflow & calibration |
+| 😴 | Sleep mode with fan cooldown protection |
+| 🔔 | Buzzer feedback for events & transitions |
+| 💾 | EEPROM persistence for all settings |
+| 🖥️ | Serial protocol v2 for desktop/web companion app |
+
+---
+
+## ⚡ Quick Start
+
+> Requires [`arduino-cli`](https://arduino.github.io/arduino-cli/) on Linux.
+
+```bash
+# 1. Set your board (once)
+./flash.sh --set-board
+
+# 2. Compile & upload
+./flash.sh
+```
+
+**Other options:**
+
+```bash
+./flash.sh --compile-only          # just compile
+./flash.sh --upload-only           # just upload
+./flash.sh -p /dev/ttyUSB0         # specify port
+./flash.sh -b                      # open serial monitor
+```
+
+Board/port config is saved at `~/.config/smd-flash/config`.
+
+---
+
+## 🗺️ Hardware Pin Map
+
 | Function | Pin | Notes |
-| --- | --- | --- |
-| MAX6675 SO | `D12` | Thermocouple data output |
-| MAX6675 CS | `D10` | Thermocouple chip select |
-| MAX6675 SCK | `D13` | Thermocouple clock |
-| Heater SSR | `D9` | PID-driven heater output |
-| Fan PWM | `D3` | PWM fan drive |
-| Buzzer | `D2` | Audible feedback |
-| Sleep input | `D4` | Active LOW sleep switch/input |
-| Up button | `D5` | Active LOW with pull-up |
-| OK button | `D6` | Active LOW with pull-up |
-| Down button | `D7` | Active LOW with pull-up |
-| LCD I2C | `A4` / `A5` | SDA / SCL on Arduino Uno/Nano |
+|---|---|---|
+| MAX6675 SO | `D12` | Thermocouple data |
+| MAX6675 CS | `D10` | Chip select |
+| MAX6675 SCK | `D13` | Clock |
+| Heater SSR | `D9` | PID output |
+| Fan PWM | `D3` | Fan drive |
+| Buzzer | `D2` | Audio feedback |
+| Sleep Input | `D4` | Active LOW |
+| Up Button | `D5` | Active LOW + pull-up |
+| OK Button | `D6` | Active LOW + pull-up |
+| Down Button | `D7` | Active LOW + pull-up |
+| LCD I2C | `A4` / `A5` | SDA / SCL |
 
-## Controls
-- `UP` / `DOWN` in normal mode change the temperature setpoint in steps.
-- Press `OK` to switch between temperature adjustment and airflow adjustment.
-- Hold buttons to repeat adjustments faster.
-- Hold `UP` + `DOWN` for about `2s` to enter calibration mode.
-- Pull the sleep input LOW to stop heating and run cooldown protection.
+---
 
-## Serial Protocol v2
-The firmware reports machine-readable packets for a desktop companion app and
-also accepts plain-text commands over serial.
+## 🎮 Controls
 
-### Packet types
-- `@BOOT`
-- `@STATE`
-- `@EVENT`
-- `@ACK`
-- `@ERR`
+- **UP / DOWN** — adjust temperature setpoint
+- **OK** — toggle between temperature & fan adjustment
+- **Hold UP + DOWN** for ~2s — enter calibration mode
+- **Sleep pin LOW** — stop heating, run fan cooldown
 
-### Supported commands
-| Command | Purpose |
-| --- | --- |
-| `SET <value>` | Set target temperature |
-| `FAN <value>` | Set display fan percentage |
-| `FANMIN <value>` | Set actual minimum fan percentage |
-| `OFFSET <value>` | Set thermocouple offset |
-| `KP <value>` | Update PID `Kp` |
-| `KI <value>` | Update PID `Ki` |
-| `KD <value>` | Update PID `Kd` |
-| `HZ <value>` | Update PID update rate |
-| `CALEN` | Enable calibration |
-| `CALDIS` | Disable calibration |
-| `CALROW <fanIdx> <tempIdx> <value>` | Update one airflow table cell |
-| `STATUS` | Print one current state packet |
-| `INFO` | Print one boot/info packet |
-| `HELP` | Print command help |
+---
 
-## Airflow Calibration
-The main sketch includes a built-in lookup table for converting sensor-domain
-temperature into a more realistic output temperature at different airflow
-levels.
+## 🔌 Serial Protocol v2
 
-Current default fan calibration points:
-- `30%`
-- `60%`
-- `90%`
+The firmware speaks machine-readable packets and plain-text commands at `115200` baud.
 
-Current default temperature points:
-- `100 C`
-- `150 C`
-- `200 C`
-- `250 C`
-- `300 C`
-- `350 C`
-- `400 C`
-- `450 C`
-- `500 C`
+**Packet types:** `@BOOT` · `@STATE` · `@EVENT` · `@ACK` · `@ERR`
 
-The current calibration dataset is also reflected in `data.txt`. If your
-hardware behaves differently, update the arrays in `SMD.ino` or tune values
-through the serial calibration commands.
+| Command | What it does |
+|---|---|
+| `SET <val>` | Target temperature |
+| `FAN <val>` | Fan display % |
+| `FANMIN <val>` | Actual minimum fan % |
+| `OFFSET <val>` | Thermocouple offset |
+| `KP / KI / KD <val>` | PID tuning |
+| `HZ <val>` | PID update rate |
+| `CALEN / CALDIS` | Airflow calibration on/off |
+| `CALROW <f> <t> <v>` | Set one calibration table cell |
+| `STATUS / INFO / HELP` | Diagnostics |
 
-## Build and Flash
-The firmware is mostly self-contained. It includes in-sketch replacements for
-the PID controller, MAX6675 interface, and I2C LCD support, so you mainly need
-the normal Arduino core environment.
+---
 
-### Quick start with `flash.sh`
-1. Install `arduino-cli`.
-2. Select your target board once:
-   `./flash.sh --set-board`
-3. Compile and upload:
-   `./flash.sh`
+## 🌬️ Airflow Calibration
 
-Useful options:
-- `./flash.sh --compile-only`
-- `./flash.sh --upload-only`
-- `./flash.sh -p /dev/ttyUSB0`
-- `./flash.sh -b`
+Use the [Desktop App](https://github.com/Frazix12/SMD-Rework-Station/releases) or [Web App](https://smd-station.vercel.app/) for easy calibration.
 
-The flash script stores the selected board and last used port in:
-- `~/.config/smd-flash/config`
+<details>
+<summary>Manual calibration points</summary>
 
-## Project Files
-| Path | Purpose |
-| --- | --- |
+**Fan levels:** `30%` · `60%` · `90%`
+
+**Temperature points:** `100°C` through `500°C` in 50° steps
+
+The current calibration data is stored in `data.txt`. Update the arrays in `SMD.ino` or use serial `CALROW` commands for live tuning.
+
+</details>
+
+---
+
+## 📁 Project Files
+
+| File | Purpose |
+|---|---|
 | `SMD.ino` | Main full-featured firmware |
-| `SMD_basic/SMD_basic.ino` | Simpler alternate firmware |
-| `flash.sh` | Compile/upload helper script |
-| `data.txt` | Airflow calibration reference data |
+| `SMD_basic/SMD_basic.ino` | Simpler fallback sketch |
+| `flash.sh` | Linux compile/upload helper |
+| `data.txt` | Airflow calibration reference |
 
-## Component List
-| Component | Quantity | Notes |
-| --- | --- | --- |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
+---
 
-## Schematic Image
-<p align="center"><em>Add the wiring / schematic image here.</em></p>
-<p align="center"><br><br><br><br></p>
+## ⚙️ Runtime Limits
+
+| Setting | Value |
+|---|---|
+| Temp range | `100°C – 500°C` |
+| Fan range | `10% – 100%` |
+| Default fan minimum | `30%` |
+| Telemetry rate | `4 Hz` |
+
+---
+
+<div align="center">
+
+Made with ❤️ and a soldering iron
+
+</div>
