@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=32&pause=1000&color=A855F7&center=true&vCenter=true&width=600&lines=🔧+SMD+Rework+Station" alt="SMD Rework Station" />
+# 🔧 SMD Rework Station
 
 **Arduino-powered hot air rework station with PID control, desktop app & web UI**
 
