@@ -16,22 +16,6 @@
 
 </div>
 
----
-
-## 🖥️ App Screenshots
-
-<div align="center">
-
-| 🔥 Main Control | ⚙️ PID Tuning |
-|:---:|:---:|
-| ![Main tab — temperature & fan controls with quick presets](docs/screenshots/main.png) | ![PID Tuning tab — Kp, Ki, Kd and loop rate](docs/screenshots/PID.png) |
-| **🎯 Calibration** | **📊 Cal Table** |
-| ![Calibration tab — sensor offset and fan minimum](docs/screenshots/calibration.png) | ![Cal Table tab — airflow calibration data grid](docs/screenshots/trable.png) |
-
-</div>
-
----
-
 ## ✨ Features
 
 <div align="center">
@@ -142,6 +126,20 @@ Use the [**Desktop App**](https://github.com/Frazix12/SMD-Rework-Station/release
 Calibration data lives in `data.txt`. Apply changes via serial `CALROW` commands for live tuning, then **Export .ino** from the desktop app to persist them.
 
 </details>
+
+---
+
+## 🖥️ App Screenshots
+
+<div align="center">
+
+| 🔥 Main Control | ⚙️ PID Tuning |
+|:---:|:---:|
+| ![Main tab — temperature & fan controls with quick presets](docs/screenshots/main.png) | ![PID Tuning tab — Kp, Ki, Kd and loop rate](docs/screenshots/PID.png) |
+| **🎯 Calibration** | **📊 Cal Table** |
+| ![Calibration tab — sensor offset and fan minimum](docs/screenshots/calibration.png) | ![Cal Table tab — airflow calibration data grid](docs/screenshots/trable.png) |
+
+</div>
 
 ---
 
