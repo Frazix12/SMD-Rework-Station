@@ -19,7 +19,7 @@
 
 <div align="center">
 
-[![YouTube Demo](https://img.youtube.com/vi/PLACEHOLDER/maxresdefault.jpg)](https://www.youtube.com/watch?v=PLACEHOLDER)
+[![YouTube Demo](https://img.youtube.com/vi/9uFsuGwbSZE/maxresdefault.jpg)](https://www.youtube.com/watch?v=9uFsuGwbSZE)
 
 </div>
 
