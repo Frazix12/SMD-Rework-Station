@@ -21,8 +21,6 @@
 
 [![YouTube Demo](https://img.youtube.com/vi/PLACEHOLDER/maxresdefault.jpg)](https://www.youtube.com/watch?v=PLACEHOLDER)
 
-*Click to watch the demo video*
-
 </div>
 
 <div align="center">
