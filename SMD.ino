@@ -1,3 +1,4 @@
+#include <avr/wdt.h>
 #include <EEPROM.h>
 #include <Wire.h>
 #include <limits.h>
@@ -2047,6 +2048,9 @@ void handleSerialInput() {
 void setup() {
   Serial.begin(serialBaudRate);
 
+  // Enable 2s watchdog timer to restart if system gets stuck
+  wdt_enable(WDTO_1MS);
+
   pinMode(ssrPin, OUTPUT);
   pinMode(buzzerPin, OUTPUT);
   pinMode(sleepPin, INPUT_PULLUP);
@@ -2075,6 +2079,9 @@ void setup() {
 
 void loop() {
   const unsigned long nowMs = millis();
+
+  // Pet the watchdog to prevent restart
+  wdt_reset();
 
   handleSerialInput();
   updateBuzzer(nowMs);

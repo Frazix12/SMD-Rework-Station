@@ -6,13 +6,12 @@
 
 <br/>
 
-[![Firmware](https://img.shields.io/badge/Firmware-v3-blueviolet?style=for-the-badge&logo=arduino&logoColor=white)](SMD.ino)
-[![Protocol](https://img.shields.io/badge/Serial_Protocol-v2_@_115200-3b82f6?style=for-the-badge&logo=serialport&logoColor=white)](SMD.ino)
-[![Platform](https://img.shields.io/badge/Arduino-Nano_/_Uno-00979D?style=for-the-badge&logo=arduino&logoColor=white)](https://arduino.cc)
-[![License](https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge)](LICENSE)
-
-[![Desktop App](https://img.shields.io/badge/🖥️_Desktop_App-Download-f97316?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Frazix12/SMD-Rework-Station/releases)
-[![Web App](https://img.shields.io/badge/🌐_Web_App-Live-10b981?style=for-the-badge&logo=vercel&logoColor=white)](https://smd-station.vercel.app/)
+<a href="https://github.com/Frazix12/SMD-Rework-Station/releases">
+  <img src="https://shieldcn.dev/badge/Desktop_App-Download-f97316.svg" alt="Desktop App" />
+</a>
+<a href="https://smd-station.vercel.app/">
+  <img src="https://shieldcn.dev/badge/Web_App-Live-10b981.svg" alt="Web App" />
+</a>
 
 </div>
 
@@ -29,35 +28,6 @@
 | 🖥️ | Serial protocol v2 for desktop/web companion app | 🌐 | Live web UI via [smd-station.vercel.app](https://smd-station.vercel.app/) |
 
 </div>
-
----
-
-## ⚡ Quick Start
-
-> [!NOTE]
-> Requires [`arduino-cli`](https://arduino.github.io/arduino-cli/) installed on Linux.
-
-```bash
-# 1. Set your board (once)
-./flash.sh --set-board
-
-# 2. Compile & upload
-./flash.sh
-```
-
-<details>
-<summary>📋 More flash options</summary>
-
-```bash
-./flash.sh --compile-only          # just compile
-./flash.sh --upload-only           # just upload
-./flash.sh -p /dev/ttyUSB0         # specify port
-./flash.sh -b                      # open serial monitor
-```
-
-Board/port config is saved at `~/.config/smd-flash/config`.
-
-</details>
 
 ---
 
@@ -90,26 +60,6 @@ Board/port config is saved at `~/.config/smd-flash/config`.
 
 ---
 
-## 🔌 Serial Protocol v2
-
-The firmware speaks machine-readable packets and plain-text commands at **`115200`** baud.
-
-**Packet types:** &nbsp;`@BOOT` &nbsp;·&nbsp; `@STATE` &nbsp;·&nbsp; `@EVENT` &nbsp;·&nbsp; `@ACK` &nbsp;·&nbsp; `@ERR`
-
-| Command | Description |
-|:---|:---|
-| `SET <val>` | Set target temperature |
-| `FAN <val>` | Set fan display % |
-| `FANMIN <val>` | Set actual minimum fan % |
-| `OFFSET <val>` | Set thermocouple offset |
-| `KP / KI / KD <val>` | PID tuning gains |
-| `HZ <val>` | PID update rate |
-| `CALEN / CALDIS` | Airflow calibration on / off |
-| `CALROW <f> <t> <v>` | Write one calibration table cell |
-| `STATUS / INFO / HELP` | Diagnostics & help |
-
----
-
 ## 🌬️ Calibration
 
 Use the [**Desktop App**](https://github.com/Frazix12/SMD-Rework-Station/releases) or [**Web App**](https://smd-station.vercel.app/) for easy point-and-click calibration.
@@ -137,9 +87,29 @@ Calibration data lives in `data.txt`. Apply changes via serial `CALROW` commands
 |:---:|:---:|
 | ![Main tab — temperature & fan controls with quick presets](docs/screenshots/main.png) | ![PID Tuning tab — Kp, Ki, Kd and loop rate](docs/screenshots/PID.png) |
 | **🎯 Calibration** | **📊 Cal Table** |
-| ![Calibration tab — sensor offset and fan minimum](docs/screenshots/calibration.png) | ![Cal Table tab — airflow calibration data grid](docs/screenshots/trable.png) |
+| ![Calibration tab — sensor offset and fan minimum](docs/screenshots/calibration.png) | ![Cal Table tab — airflow calibration data grid](docs/screenshots/table.png) |
 
 </div>
+
+---
+
+## 🧩 Hardware Files
+
+<div align="center">
+
+| Circuit Schematic | Components Needed |
+|:---:|:---:|
+| ![Circuit schematic](docs/Schematic.jpg) | **1.** Arduino Nano (1)<br>**2.** MAX6675 (1)<br>**3.** MOC3021 (1)<br>**4.** 10k resistor (1)<br>**5.** 1k resistor (3)<br>**6.** 680 ohm resistor (1)<br>**7.** BT137 Triac (1)<br>**8.** 104 capacitor (2)<br>**9.** 13009 transistor (1)<br>**10.** LM7812 regulator (1)<br>**11.** Buzzer (1)<br>**12.** LED (1)<br>**13.** 2-pin terminal (2)<br>**14.** Headers |
+
+</div>
+
+**Manufacturing files:**
+
+| File | Purpose |
+|:---|:---|
+| [`Manufacture/Gerber.zip`](Manufacture/Gerber.zip) | PCB fabrication Gerbers |
+| [`Manufacture/Top_Silk_Layer.pdf`](Manufacture/Top_Silk_Layer.pdf) | Top silk layer |
+| [`Manufacture/Bottom_Silk_Layer.pdf`](Manufacture/Bottom_Silk_Layer.pdf) | Bottom silk layer |
 
 ---
 
@@ -167,5 +137,9 @@ Calibration data lives in `data.txt`. Apply changes via serial `CALROW` commands
 <div align="center">
 
 Made with ❤️ and a soldering iron by **Frazix** & **E&E**
+
+---
+
+**License:** [CC BY-NC-ND 4.0](LICENSE) — Personal use only, no commercial use or modifications allowed.
 
 </div>

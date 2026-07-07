@@ -1,0 +1,16 @@
+Component list
+
+1: Arduino Nano (1)
+2: MAX6675 (1)
+3: MOC3021 (1)
+4: 10k resistor (1)
+5: 1k resistor (3)
+6: 680 ohm resistor (1)
+7: BT137 Triac (1)
+8: 104 capacitor (2)
+9: 13009 transistor (1)
+10: LM7812 voltage regulator (1)
+11: Buzzer (1)
+12: LED (1)
+13: 2-pin terminal block (2)
+14: Male/female header
