@@ -19,6 +19,14 @@
 
 <div align="center">
 
+[![YouTube Demo](https://img.youtube.com/vi/PLACEHOLDER/maxresdefault.jpg)](https://www.youtube.com/watch?v=PLACEHOLDER)
+
+*Click to watch the demo video*
+
+</div>
+
+<div align="center">
+
 | | Feature | | Feature |
 |:---:|:---|:---:|:---|
 | 🌡️ | PID heater control via SSR output | 💨 | PWM fan control with calibrated airflow table |
