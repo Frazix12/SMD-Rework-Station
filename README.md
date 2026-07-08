@@ -116,6 +116,9 @@ Calibration data lives in `data.txt`. Apply changes via serial `CALROW` commands
 | [`Manufacture/Gerber.zip`](Manufacture/Gerber.zip) | PCB fabrication Gerbers |
 | [`Manufacture/Top_Silk_Layer.pdf`](Manufacture/Top_Silk_Layer.pdf) | Top silk layer |
 | [`Manufacture/Bottom_Silk_Layer.pdf`](Manufacture/Bottom_Silk_Layer.pdf) | Bottom silk layer |
+| [`Manufacture/Button/Button_Gerber.zip`](Manufacture/Button/Button_Gerber.zip) | Button PCB fabrication Gerbers |
+| [`Manufacture/Button/Button_Top_Silk_Layer.pdf`](Manufacture/Button/Button_Top_Silk_Layer.pdf) | Button top silk layer |
+| [`Manufacture/Button/Button_Bottom_Silk_Layer.pdf`](Manufacture/Button/Button_Bottom_Silk_Layer.pdf) | Button bottom silk layer |
 
 ---
 
