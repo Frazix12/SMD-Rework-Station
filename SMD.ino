@@ -1,7 +1,7 @@
 #include <avr/wdt.h>
 #include <EEPROM.h>
 #include <Wire.h>
-#include <limits.h>
+#include <stdint.h>
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -218,7 +218,7 @@ class SmdLiquidCrystalI2C : public Print {
     rows_ = rows;
     Wire.begin();
 
-    display_function_ = kFourBitMode | kOneLine | kFiveByEightDots;
+    display_function_ = 0;
     if (rows_ > 1) {
       display_function_ |= kTwoLine;
     }
@@ -239,11 +239,11 @@ class SmdLiquidCrystalI2C : public Print {
     write4Bits(0x02 << 4);
 
     command(kFunctionSet | display_function_);
-    display_control_ = kDisplayOn | kCursorOff | kBlinkOff;
+    display_control_ = kDisplayOn;
     command(kDisplayControl | display_control_);
     clear();
 
-    display_mode_ = kEntryLeft | kEntryShiftDecrement;
+    display_mode_ = kEntryLeft;
     command(kEntryModeSet | display_mode_);
     home();
   }
@@ -2049,7 +2049,7 @@ void setup() {
   Serial.begin(serialBaudRate);
 
   // Enable 2s watchdog timer to restart if system gets stuck
-  wdt_enable(WDTO_1MS);
+  wdt_enable(WDTO_2S);
 
   pinMode(ssrPin, OUTPUT);
   pinMode(buzzerPin, OUTPUT);
